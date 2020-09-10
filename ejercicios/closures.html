@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Closures</title>
+  </head>
+  <body>
+    <a href="/ejercicios/index.html">Go back</a>
+    <p><em>Abre la consola</em></p>
+  </body>
+  <script>
+    // Closures
+    // printColor
+
+    //IIFE Immediately-invoked function expressions.
+    // Esto es un closure. Closure es una función interna que tiene acceso a el alcance de su función externa incluso después de que la función externa ejecute un return.
+    /*  (function () {
+      let color = "green";
+
+      function printColor() {
+        console.log(color);
+      }
+
+      printColor();
+    })(); */
+
+    //Funciones que regresan funciones.
+    /* function makeColorPrinter(color) {
+      let colorMessage = `The color is ${color}`;
+
+      return function () {
+        console.log(colorMessage); //Esta función recuerda el valor de las variables de su padre
+      };
+    }
+
+    let greenColorPrinter = makeColorPrinter("green");
+    console.log(greenColorPrinter()); // regresa la otra función si no le ponemos los paréntesis */
+
+    //Variables Privadas
+    /* const counter = {
+      count: 3,
+    };
+    console.log(counter.count); //Acá en el scope global, se tiene acceso al valor de la variable counter */
+
+    //PARA QUE LAS VARIABLES SEAN PRIVADAS
+    function makeCounter(n) {
+      let count = n;
+
+      return {
+        //RETORNA UN OBJETO CON FUNCIONES
+        increase: function () {
+          count = count + 1;
+        },
+        decrease: function () {
+          count = count - 1;
+        },
+        getCount: function () {
+          return count;
+        },
+      };
+    }
+
+    let counter = makeCounter(7);
+    console.log(counter.count); //undefined
+    console.log(counter.getCount()); //7
+    counter.increase();
+    counter.increase();
+    counter.increase();
+    console.log(counter.getCount()); //10
+    counter.decrease();
+    counter.decrease();
+    counter.decrease();
+    console.log(counter.getCount()); //7
+
+    counter.count = 0; //No se puede papi, sigue siendo 7
+  </script>
+</html>

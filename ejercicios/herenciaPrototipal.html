@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Herencia Prototipal</title>
+  </head>
+  <body>
+    <a href="/ejercicios/index.html">Go back</a>
+    <p><em>Abre la consola</em></p>
+    <h1>
+      <b
+        ><samp>SomeObject.prototype</samp> es un objeto donde definimos el prototipo de las instancias SomeObject. Es
+        decir, las instancias de SomeObject van a "heredar" de SomeObject.prototype
+        <small>Los hijos de SomeObject van a heredar del padre de SomeObject o del Abuelo, o el bisabuelo</small></b
+      >
+    </h1>
+    <h1>
+      <b
+        ><samp>SomeObject.[[Prototype]]</samp> es el prototipo de SomeObject. Es decir, SomeObject "hereda" de
+        SomeObject.prototype.</b
+      >
+    </h1>
+  </body>
+  <script>
+    function Hero(name) {
+      this.name = name;
+    }
+
+    //Un prototype del objeto constructor
+    Hero.prototype.saludar = function () {
+      console.log(`New: ${this.name}`);
+    };
+
+    const zelda = new Hero("Zelda");
+    zelda.saludar();
+
+    // Propiedades de la instancia
+    console.log(`"Name": ${zelda.name}`);
+
+    // Propiedades de la "Clase"
+    console.log(`"Saludar": ${zelda.saludar}`);
+
+    // Propiedades heredadas ej: toString. esa mondá viene del más allá, desde objeto
+    console.log(`"toString": ${zelda.toString}`);
+
+    // hasOwnProperty (de dónde sale toString o esto?). esa mondá también viene de la concha, esto es para saber si algo le pertenece directamente a un objeto o si lo toma prestado a través de herencia
+    console.log(`"zelda.hasOwnProperty"(name)"": ${zelda.hasOwnProperty("name")}`); //true
+    console.log(`"zelda.hasOwnProperty"(saludar)"": ${zelda.hasOwnProperty("saludar")}`); //false porque no es directamente de zelda, lo tomó prestado de la clase Hero
+
+    //inspeccionemos el prototipo del zelda
+    //inspeccionemos el prototipo del Hero
+    //inspeccionemos el prototipo del Object
+  </script>
+</html>

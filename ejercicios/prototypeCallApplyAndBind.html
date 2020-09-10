@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Call Apply Bind(enlazar)</title>
+  </head>
+  <body>
+    <a href="/ejercicios/index.html">Go back</a>
+    <p><em>Abre la consola</em></p>
+    <p>Todas las funciones tienen call, apply y bind para asignar this</p>
+    <ul>
+      <li><button class="call-to-action">Aprender</button></li>
+      <li><button class="call-to-action">Aprender Más</button></li>
+      <li><button class="call-to-action">¡Nunca parar de Aprender!</button></li>
+    </ul>
+  </body>
+  <script>
+    //Establece `this` usando `call`*******************
+    function saludar() {
+      console.log(`Hola soy ${this.name} ${this.lastName}`);
+    }
+
+    const pablo = {
+      name: "Pablo",
+      lastName: "Mármol",
+    };
+
+    //el primer argumento que recibe call es el this
+    saludar.call(pablo);
+
+    function caminar(metros, direccion) {
+      console.log(`${this.name} camina ${metros} metros hacia ${direccion}`);
+    }
+
+    caminar.call(pablo); //Pablo camina undefined metros hacia undefined
+    //tienes que pasar el this y los parametros que tiene la función caminar
+    caminar.call(pablo, 23, "izquierda");
+
+    //Establece `this` usando `call` y pasar********** argumentos a la función--> Apply hace la misma monda que call pero los argumentos se pasan un poco diferente.
+
+    caminar.apply(pablo, [600, "derecha"]);
+
+    //apply es más fácil para pasar listas.
+    const valores = [250, "norte"];
+    caminar.apply(pablo, valores);
+
+    /* ayudita para RECORDAR cual es cual.
+    Call - Comma
+    Apply - Arreglo
+    */
+
+    //Establece `this` usando `apply` y pasar argumentos a la función ***************************
+    const pedro = {
+      name: "Pedro",
+      lastName: "Pica Piedra",
+    };
+
+    //bind crea nuevas funciones así que hay que asignarla a una variable
+    const pedroSaluda = saludar.bind(pedro);
+    pedroSaluda(); //Hola, sot Pedro Pica Piedra
+
+    //si queremos guardar los argumentos los ponemos como parametros directos, si no los ponemos cuando llamamos a la variable pedroCamina
+    const pedroCamina = caminar.bind(pedro, 1000, "este");
+
+    pedroCamina();
+    //Establecer `this en una nueva función usando `bind`(enlazar)
+
+    //Cuándo es útil usar uno de estos métodos
+    const buttons = document.getElementsByClassName("call-to-action");
+    /*buttons.forEach(button => {
+      button.onclick = () =>
+        alert("Nunca pares de aprender");
+    }); //ERROR PORQUE BUTTONS NO ES UN ARRAY, ES UN NODELIST */
+
+    //ForEach es una propiedad del Array, y le podemos cambiar el this usando call
+    Array.prototype.forEach.call(buttons, button => {
+      button.onclick = () => alert("Nunca pares de aprender");
+    });
+    console.log(buttons);
+    //O simplemente cambiamos la manera de traernos los botones del DOM por querySelectorAll
+    /* const buttons = document.querySelectorAll(".call-to-action");
+    buttons.forEach(button => {
+      button.onclick = () => {
+        alert("Nunca pares de aprender");
+      };
+    }); */
+  </script>
+</html>

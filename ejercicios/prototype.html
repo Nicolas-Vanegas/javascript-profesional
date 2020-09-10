@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Prototype</title>
+  </head>
+  <body>
+    <a href="/ejercicios/index.html">Go back</a>
+    <p><em>Abre la consola</em></p>
+  </body>
+  <script>
+    //Un objeto común y corriente ***************
+    /*  const zelda = {
+      name: "Zelda",
+    };
+
+    zelda.saludar = function () {
+      console.log(`Hola, soy ${this.name}`);
+    };
+    zelda.saludar();
+
+    const link = {
+      name: "Link",
+    };
+
+    link.saludar = function () {
+      console.log(`Hola, soy ${this.name}`);
+    };
+    link.saludar(); */
+
+    //Seamos un poco más eficientes *****************
+    /* function Hero(name) {
+      //una constructor que no es constructor
+      const hero = {
+        name: name,
+      };
+
+      hero.saludar = function () {
+        console.log(`Hola, soy ${this.name}`);
+      };
+
+      return hero;
+    }
+
+    const zelda = Hero("Zelda");
+    zelda.saludar();
+
+    const link = Hero("Link");
+    link.saludar(); */
+
+    //Aún podemos mejorar más y evitar tener que crear la misma funcion cada vez que la llamamos
+    /* const heroMethods = {
+      saludar: function () {
+        console.log(`Me llamo ${this.name}`);
+      },
+    };
+
+    function Hero(name) {
+      //una constructor que no es constructor
+      const hero = {
+        name: name,
+      };
+      hero.saludar = heroMethods.saludar;
+      return hero;
+    }
+
+    const zelda = Hero("Zelda");
+    zelda.saludar();
+
+    const link = Hero("Link");
+    link.saludar(); */
+
+    //Object.create
+    //Crea un nuevo objeto apartir de otro objeto
+    /* const nuevoObjeto = Object.create(objeto); */
+
+    /* const heroMethods = {
+      saludar: function () {
+        console.log(`Soy súperheroe! ${this.name}`);
+      },
+    };
+
+    function Hero(name) {
+      //una constructor que no es constructor
+      const hero = Object.create(heroMethods); //Todas las propiedades de heroMethods pasan a un proto y ahora se pueden usar sus propiedades en ese objeto
+      hero.name = name;
+      return hero;
+    }
+
+    const zelda = Hero("Zelda");
+    zelda.saludar();
+
+    const link = Hero("Link");
+    link.saludar(); */
+
+    //Los métodos de hero dentro de Hero
+    //Esto está bien, pero si es algo que le pertenece a Hero, debería estar dentro de Hero
+    /* const heroMethods = {
+      saludar: function () {
+        console.log(`Soy súperheroe! ${this.name}`);
+      },
+    }; */
+
+    /* function Hero(name) {
+      //una constructor que no es constructor
+      const hero = Object.create(Hero.prototype); //Todas las propiedades de heroMethods pasan a un proto y ahora se pueden usar sus propiedades en ese objeto
+      hero.name = name;
+      return hero;
+    }
+
+    //Todas las funciones tienen un prototype, el cuál, al comienzo es un objeto vacio
+    Hero.prototype.saludar = function () {
+      console.log(`Soy súperheroe! ${this.name}`);
+    };
+
+    const zelda = Hero("Zelda");
+    zelda.saludar();
+
+    const link = Hero("Link");
+    link.saludar(); */
+
+    //new es un atajo(azúcar sintáctica) para llevar Hero.prototype al objeto
+    //constructor
+    function Hero(name) {
+      //Cuando usamos new Esta mondá ocurre automáticamente
+      //this = Object.create(Hero.prototype);
+      this.name = name;
+      //Esta mondá también ocurre automáticamente
+      //return this;
+    }
+
+    //Un prototype del objeto constructor
+    Hero.prototype.saludar = function () {
+      console.log(`New: ${this.name}`);
+    };
+
+    const zelda = new Hero("Zelda");
+    zelda.saludar();
+
+    const link = new Hero("Link");
+    link.saludar();
+  </script>
+</html>

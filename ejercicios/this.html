@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>This</title>
+  </head>
+  <body>
+    <a href="/ejercicios/index.html">Go back</a>
+    <p><em>Abre la consola</em></p>
+    <h1>
+      <samp>this</samp> Se refiere a un objeto. Este objeto es el que actualmente está ejecutando un pedazo de código
+    </h1>
+  </body>
+  <script>
+    //this en el scope Global*********************
+    console.log(this); //objeto window
+
+    //this en el scope de una función*************
+    function whoIsThis() {
+      return this;
+    }
+    console.log(`whoIsThis (): ${whoIsThis()}`); //objeto window
+
+    //this en el scope de una función en strict mode
+    function whoIsThisStrict() {
+      "use strict"; // de esta manera iniciamos el modo estricto
+      return this;
+    }
+    console.log(`whoIsThisStrict (): ${whoIsThisStrict()}`); //undefined
+
+    //this en el contexto de un objeto*************
+    const person = {
+      name: "Nicolas",
+      saludar: function () {
+        console.log(`Hola soy ${this.name}`);
+      },
+    };
+
+    person.saludar(); //Hola soy Nicolás, respeta el this de la función que está dentro de un objeto. this en este caso se refiere a él mismo y al padre.
+
+    // this cuando sacamos a una función de un objeto
+    const accion = person.saludar;
+    accion(); //Hola soy... no identifica Nicolas porque la variable acción no se está llamando dentro del contexto del objeto, se está llamando directamente desde afuera.
+
+    //this en el contexto de una "Clase"**********
+    //funciona como un constructor
+    function Person(name) {
+      //Todas las funciones comienzan teniendo un objeto vacio como valor de this. this = {}. No se puede asignar this directamente, si puedes asignar una propiedad de this.
+      this.name = name; //cuando asignamos los valores así lo estamos haciendo sobre la instancia, no sobre la clase
+    }
+
+    //Cuando tenemos estos objetos que se comportan como clases, si queremos darle un MÉTODO lo hacemos a través de su prototype
+    Person.prototype.saludar = function () {
+      console.log(`Me llamo ${this.name}`);
+    };
+
+    // Ahora creamos una instancia de este objeto
+    const pedro = new Person("pedro");
+    pedro.saludar(); //Me llamo Pedro. En los objetos que fueron instanciados de una clase, this se va a referir a esa instancia.
+  </script>
+</html>
